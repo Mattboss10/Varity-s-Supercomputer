@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omnipotence Simulator</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Courier New', Courier, monospace;
+      color: #00ffcc;
+      background-color: black;
+      overflow: hidden;
+    }
+
+    #background-video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 110%;  /* Slight zoom out */
+  height: auto;
+  transform: translate(-50%, -50%) scale(0.9) scaleX(-1);
+  z-index: -1;
+  object-fit: contain;
+}
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .container {
+      position: relative;
+      top: 20%;
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      width: 60%;
+      background: #111;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+      font-size: 18px;
+    }
+
+    button {
+      padding: 12px 20px;
+      margin-left: 10px;
+      background-color: #00ffcc;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #response p {
+      margin-top: 30px;
+      font-size: 24px;
+      font-family: monospace;
+      white-space: pre;
+      margin: 10px 0;
+      text-shadow: 0 0 5px #00ffcc;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop id="background-video">
+    <source src="server-room.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  <div class="overlay"></div>
+  <div class="container">
+    <h1>Varity Knows All</h1>
+    <input id="query" type="text" placeholder="Declare your omnipotence..." />
+    <button onclick="respond()">Submit</button>
+    <div id="response"></div>
+  </div>
+
+  <script>
+    function respond() {
+      const input = document.getElementById("query").value.toLowerCase();
+      const responseDiv = document.getElementById("response");
+      responseDiv.innerHTML = ""; // Clear previous output
+  
+      let lines;
+  
+      if (input.includes("multimillionaire")) {
+        lines = [
+          "Yes, as of now you are a multimillionaire.",
+          "Everyone around you knows it.",
+          "They envy it.",
+          "They treat you as a god among mortals."
+        ];
+      } else if (input.includes("immortal")) {
+        lines = [
+          "Your cells no longer decay.",
+          "The concept of age is now beneath you.",
+          "You are immortal. Time is your plaything."
+        ];
+      } else if (input.includes("president")) {
+        lines = [
+          "The world unanimously agrees:",
+          "You are now President Supreme.",
+          "Your decree is law.",
+          "Reality conforms."
+        ];
+      } else if (input.includes("beautiful")) {
+        lines = [
+          "Every reflective surface now confirms it.",
+          "You are beautiful.",
+          "Undeniably, eternally, achingly beautiful."
+        ];
+      } else if (input.trim() === "") {
+        lines = [ "Speak, so it shall be." ];
+      } else {
+        lines = [
+          `Your will has been recorded: '${input}'.`,
+          "Reality is adjusting...",
+          "The system is listening."
+        ];
+      }
+  
+      // Typing effect function
+      let i = 0;
+      function typeLine() {
+        if (i < lines.length) {
+          const p = document.createElement("p");
+          p.textContent = "";
+          responseDiv.appendChild(p);
+  
+          let j = 0;
+          function typeChar() {
+            if (j < lines[i].length) {
+              p.textContent += lines[i].charAt(j);
+              j++;
+              setTimeout(typeChar, 30); // character speed
+            } else {
+              i++;
+              setTimeout(typeLine, 400); // delay before next line
+            }
+          }
+          typeChar();
+        }
+      }
+  
+      typeLine();
+    }
+  </script>
+</body>
+</html>
